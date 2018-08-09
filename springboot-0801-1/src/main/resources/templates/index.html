@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/css/index.css}" rel="stylesheet"/>
+<script type="text/javascript" th:inline="javascript">
+	var name = /*[[${param.name}]]*/;
+	var path = /*[[${books[1]}]]*/
+	var se = /*[[${session.se}]]*/
+	alert(name+","+path+","+se);
+</script>
+</head>
+<body>
+	<h1 th:text="${param.name}" th:unless="${param.name == null}">请求参数</h1>
+	<h1 th:text="${session.se}">session value</h1>
+	<h1 th:text='${#request.getParameter("name")}'>session value</h1>
+	
+	<table>
+		<thead>
+			<tr>
+				<td>编号</td>
+				<td>标题</td>
+				<td>价格</td>
+				<td>日期</td>
+			</tr>
+		</thead>
+		<tbody th:remove="all-but-first">
+			<tr th:each="book,index : ${books}">
+				<td th:text="${book.bookId}"></td>
+				<td th:text="${book.title}">jsp</td>
+				<td th:text="${book.price}">200</td>
+				<td th:text="${#dates.format(book.date, 'yyyy-MM-dd HH')}">2000-09-09</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>jsp从入门到放弃</td>
+				<td>100</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

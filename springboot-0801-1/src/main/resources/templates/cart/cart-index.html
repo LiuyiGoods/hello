@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<base th:href="@{/}"/>
+    <meta charset="UTF-8">
+    <title>淘宝购物车页面</title>
+    <link href="css/myCart.css"  rel="stylesheet" />
+</head>
+<body>
+<div id="header"><img src="images/taobao_logo.gif" alt="logo" /></div>
+<div id="nav">您的位置：<a href="#">首页</a> &gt; <a href="#">我的淘宝</a> &gt; 我的购物车</div>
+<div id="navlist">
+    <ul>
+        <li class="navlist_red_left"></li>
+        <li class="navlist_red">1. 查看购物车</li>
+        <li class="navlist_red_arrow"></li>
+        <li class="navlist_gray">2. 确认订单信息</li>
+        <li class="navlist_gray_arrow"></li>
+        <li class="navlist_gray">3. 付款到支付宝</li>
+        <li class="navlist_gray_arrow"></li>
+        <li class="navlist_gray">4. 确认收货</li>
+        <li class="navlist_gray_arrow"></li>
+        <li class="navlist_gray">5. 评价</li>
+        <li class="navlist_gray_right"></li>
+    </ul>
+</div>
+
+<div id="content">
+	<form action="" method="post" name="myform">
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0" id="shopping">        
+            <thead>
+            <tr>
+                <td class="title_1"><input id="allCheckBox" type="checkbox" value=""/>全选</td>
+                <td class="title_2" colspan="1">店铺宝贝</td>
+                <td class="title_4">单价（元）</td>
+                <td class="title_5">数量</td>
+                <td class="title_6">小计（元）</td>
+                <td class="title_7">操作</td>
+            </tr>
+            <tr>
+                <td colspan="8" class="line"></td>
+            </tr>
+            </thead>
+            <tbody th:remove="all-but-first" >
+            <tr id="product1" th:each="cart : ${carts}">
+                <td class="cart_td_1">
+                	<!-- <input name="cartCheckBox" th:if="${cart.checked == 1}" checked type="checkbox" value="${cart.id}" />
+                	<input name="cartCheckBox" th:unless="${cart.checked == 1}" type="checkbox" value="${cart.id}" />
+                	<input type="checkbox" th:checked="false"/> -->
+                	<!-- th:checked="" 表达式返回true，选中，返回false，不选中 -->
+                	<input name="cartCheckBox" type="checkbox" th:checked="${cart.checked==1}" th:value="${cart.id}" th:onclick="|updateChecked(${cart.id},this)|"/>
+                </td>
+                <td class="cart_td_3"><a href="#" th:text="${cart.goodsName}">日韩流行风时尚美眉最爱独特米字拼图金属坡跟公主靴子黑色</a></td>
+                <td class="cart_td_5" th:text="${cart.goodsPrice}">138.00</td>
+                <td class="cart_td_6"><img src="images/taobao_minus.jpg" alt="minus" class="hand" th:onclick="|updateQuantity('-',this,${cart.id})|"/> <input th:id="|num_${cart.id}|" type="text"  th:value="${cart.quantity}" class="num_input" readonly="readonly"/> <img src="images/taobao_adding.jpg" alt="add" class="hand" th:onclick="|updateQuantity('+',this,${cart.id})|"/></td>
+                <td class="cart_td_7" th:id="|td_${cart.id}|" th:text="${cart.goodsPrice * cart.quantity}"></td>
+                <td class="cart_td_8"><a href="javascript:void(0);"  th:onclick="|deleteCart(${cart.id},this)|">删除</a></td>
+            </tr>
+            <tr id="product2">
+                <td class="cart_td_1"><input name="cartCheckBox" type="checkbox" value="product2" /></td>
+                <td class="cart_td_3"><a href="#">chanel/香奈尔/香奈尔炫亮魅力唇膏3.5g</a></td>
+                <td class="cart_td_5">265.00</td>
+                <td class="cart_td_6"><img src="images/taobao_minus.jpg" alt="minus" class="hand"/> <input id="num_2" type="text"  value="1" class="num_input" readonly="readonly"/> <img src="images/taobao_adding.jpg" alt="add" class="hand"/></td>
+                <td class="cart_td_7"></td>
+                <td class="cart_td_8"><a href="javascript:void(0);">删除</a></td>
+            </tr>
+            <tr id="product3">
+                <td class="cart_td_1"><input name="cartCheckBox" type="checkbox" value="product3"/></td>
+                <td class="cart_td_3"><a href="#">蝶妆海?蓝清滢粉底液10#（象牙白）</a></td>
+                <td class="cart_td_5">85.00</td>
+                <td class="cart_td_6"><img src="images/taobao_minus.jpg" alt="minus" class="hand"/> <input id="num_3" type="text"  value="1" class="num_input" readonly="readonly"/> <img src="images/taobao_adding.jpg" alt="add" class="hand"/></td>
+                <td class="cart_td_7"></td>
+                <td class="cart_td_8"><a href="javascript:void(0);">删除</a></td>
+            </tr>
+            <tr id="product4">
+                <td class="cart_td_1"><input name="cartCheckBox" type="checkbox" value="product4"/></td>
+                <td class="cart_td_3"><a href="#">相宜促销专供 大S推荐 最好用的LilyBell化妆棉</a></td>
+                <td class="cart_td_5">12.00</td>
+                <td class="cart_td_6"><img src="images/taobao_minus.jpg" alt="minus" class="hand" onclick="updateQuantity('-',this)"/> <input id="num_4" type="text"  value="2" class="num_input" readonly="readonly"/> <img src="images/taobao_adding.jpg" alt="add" class="hand" onclick="updateQuantity('+',this)"/></td>
+                <td class="cart_td_7"></td>
+                <td class="cart_td_8"><a href="javascript:void(0);">删除</a></td>
+            </tr>
+            </tbody>  
+			<tfoot>
+	            <tr>
+	                <td  colspan="3"><a id="deleteAll" href="javascript:void(0);"><img src="images/taobao_del.jpg" alt="delete" onclick="deleteAllCart()"/></a></td>
+	                <td colspan="5" class="shopend">商品总价（不含运费）：<label id="total" class="yellow" th:text="${totalPrice}"></label> 元<br />
+	                    可获积分 <label class="yellow" id="integral"></label> 点<br />
+	                    <input name=" " type="image" src="images/taobao_subtn.jpg" /></td>
+	            </tr> 
+            </tfoot>   
+    	</table>
+    </form>
+</div>
+<script type="text/javascript" src="js/jquery-1.12.4.js"></script>
+<script type="text/javascript">
+function deleteCart(id,a){
+	if(!confirm('确定删除吗')) 
+		return;
+	
+	$.get("cart/delete/"+id,function(data){
+		$(a).closest("tr").remove();
+		$("#total").text(data);
+	}).fail(function(xhr){
+		alert("错误："+xhr.responseText);
+	})
+}
+function updateQuantity(op,span,id){
+	var input = $(span).closest("td").find("input");
+	var n = input.val();
+	n = eval(n+op+1);//计算数量,注意eval函数的使用
+	input.val(n);
+	$.get("cart/update/"+id,{quantity:n},function(data){
+		$("#total").text(data.totalPrice);
+		$("#td_"+id).text(data.subPrice);
+	}).fail(function(xhr){
+		alert("错误："+xhr.responseText);
+	});
+}
+
+function updateChecked(id,input){
+	//参数说明：如果勾上，传 1，否则，传 0
+	$.get("cart/updateChecked/"+id,{checked:input.checked?1:0},function(data){
+		$("#total").text(data.totalPrice);
+	}).fail(function(xhr){
+		alert("错误："+xhr.responseText);
+	});
+}
+
+function deleteAllCart(a){
+	if(!confirm('确定删除吗')) 
+		return;
+	
+	var values=[];
+	$("#shopping tbody :checked").each(function(){
+		values.push(this.value);
+	});
+	//参数为id数组，需要将内容连接成字符串，Spring后台才能接收，格式为：1,2,3
+	$.get("cart/deleteAll/",{id:values.join(",")},function(data){
+		//删除选中行
+		$("#shopping tbody :checked").each(function(){
+			$(this).closest("tr").remove();
+		});
+		$("#total").text(data);
+	}).fail(function(xhr){
+		alert("错误："+xhr.responseText);
+	}) 
+}
+</script>
+</body>
+</html>

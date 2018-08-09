@@ -1,0 +1,17 @@
+# 购物车表
+CREATE TABLE Cart(
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	goodsName 	VARCHAR(50)		COMMENT '商品名称',
+	goodsPrice 	FLOAT 			COMMENT '商品价格',
+	quantity	INT 			COMMENT '数量',
+	userId		INT 			COMMENT '用户Id',
+	createdTime	DATETIME		COMMENT '加入购物车的时间',
+	checked		INT 			COMMENT '是否选中,0:未选中，1:选中'
+);
+
+INSERT INTO Cart(goodsName,goodsPrice,quantity,userId,createdTime,checked)
+	VALUES('精通JSP',20,2,1,'2018-07-30 09:09:09',0);
+INSERT INTO Cart(goodsName,goodsPrice,quantity,userId,createdTime,checked)
+	VALUES('JSP从入门到放弃',12.5,2,1,'2018-07-30 09:09:10',0);
+INSERT INTO Cart(goodsName,goodsPrice,quantity,userId,createdTime,checked)
+	VALUES('怎样才能彻底忘记JSP',20.8,2,1,'2018-07-30 09:09:12',0);

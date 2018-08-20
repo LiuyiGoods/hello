@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yd.dao.TProductMapper">
+  <resultMap id="BaseResultMap" type="com.yd.model.TProduct">
+    <id column="pro_id" jdbcType="INTEGER" property="proId" />
+    <result column="pro_name" jdbcType="VARCHAR" property="proName" />
+    <result column="pro_yprice" jdbcType="DECIMAL" property="proYprice" />
+    <result column="pro_sprice" jdbcType="DECIMAL" property="proSprice" />
+    <result column="pro_cprice" jdbcType="DECIMAL" property="proCprice" />
+    <result column="cat_id" jdbcType="INTEGER" property="catId" />
+    <result column="pro_detail" jdbcType="VARCHAR" property="proDetail" />
+    <result column="pro_num" jdbcType="INTEGER" property="proNum" />
+    <result column="pic_id" jdbcType="INTEGER" property="picId" />
+    <result column="pro_status" jdbcType="INTEGER" property="proStatus" />
+    <result column="c_time" jdbcType="TIMESTAMP" property="cTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pro_id, pro_name, pro_yprice, pro_sprice, pro_cprice, cat_id, pro_detail, pro_num, 
+    pic_id, pro_status, c_time
+  </sql>
+  <select id="queryAll" resultMap = "BaseResultMap">
+  	select * from t_product 
+  	<where>
+  		<if test="proName != null">
+        and pro_name = #{proName,jdbcType=VARCHAR}
+      </if>
+      <if test="proYprice != null">
+        and pro_yprice = #{proYprice,jdbcType=DECIMAL}
+      </if>
+      <if test="proSprice != null">
+        and pro_sprice = #{proSprice,jdbcType=DECIMAL}
+      </if>
+      <if test="proCprice != null">
+        and pro_cprice = #{proCprice,jdbcType=DECIMAL}
+      </if>
+      <if test="catId != null">
+        and cat_id = #{catId,jdbcType=INTEGER}
+      </if>
+      <if test="proDetail != null">
+        and pro_detail = #{proDetail,jdbcType=VARCHAR}
+      </if>
+      <if test="proNum != null">
+        and pro_num = #{proNum,jdbcType=INTEGER}
+      </if>
+      <if test="picId != null">
+        and pic_id = #{picId,jdbcType=INTEGER}
+      </if>
+      <if test="proStatus != null">
+        and pro_status = #{proStatus,jdbcType=INTEGER}
+      </if>
+      <if test="cTime != null">
+        and c_time = #{cTime,jdbcType=TIMESTAMP}
+      </if>
+  	</where>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_product
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_product
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yd.model.TProduct">
+    insert into t_product (pro_id, pro_name, pro_yprice, 
+      pro_sprice, pro_cprice, cat_id, 
+      pro_detail, pro_num, pic_id, 
+      pro_status, c_time)
+    values (#{proId,jdbcType=INTEGER}, #{proName,jdbcType=VARCHAR}, #{proYprice,jdbcType=DECIMAL}, 
+      #{proSprice,jdbcType=DECIMAL}, #{proCprice,jdbcType=DECIMAL}, #{catId,jdbcType=INTEGER}, 
+      #{proDetail,jdbcType=VARCHAR}, #{proNum,jdbcType=INTEGER}, #{picId,jdbcType=INTEGER}, 
+      #{proStatus,jdbcType=INTEGER}, #{cTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yd.model.TProduct">
+    insert into t_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="proId != null">
+        pro_id,
+      </if>
+      <if test="proName != null">
+        pro_name,
+      </if>
+      <if test="proYprice != null">
+        pro_yprice,
+      </if>
+      <if test="proSprice != null">
+        pro_sprice,
+      </if>
+      <if test="proCprice != null">
+        pro_cprice,
+      </if>
+      <if test="catId != null">
+        cat_id,
+      </if>
+      <if test="proDetail != null">
+        pro_detail,
+      </if>
+      <if test="proNum != null">
+        pro_num,
+      </if>
+      <if test="picId != null">
+        pic_id,
+      </if>
+      <if test="proStatus != null">
+        pro_status,
+      </if>
+      <if test="cTime != null">
+        c_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="proId != null">
+        #{proId,jdbcType=INTEGER},
+      </if>
+      <if test="proName != null">
+        #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="proYprice != null">
+        #{proYprice,jdbcType=DECIMAL},
+      </if>
+      <if test="proSprice != null">
+        #{proSprice,jdbcType=DECIMAL},
+      </if>
+      <if test="proCprice != null">
+        #{proCprice,jdbcType=DECIMAL},
+      </if>
+      <if test="catId != null">
+        #{catId,jdbcType=INTEGER},
+      </if>
+      <if test="proDetail != null">
+        #{proDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="proNum != null">
+        #{proNum,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="proStatus != null">
+        #{proStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cTime != null">
+        #{cTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yd.model.TProduct">
+    update t_product
+    <set>
+      <if test="proName != null">
+        pro_name = #{proName,jdbcType=VARCHAR},
+      </if>
+      <if test="proYprice != null">
+        pro_yprice = #{proYprice,jdbcType=DECIMAL},
+      </if>
+      <if test="proSprice != null">
+        pro_sprice = #{proSprice,jdbcType=DECIMAL},
+      </if>
+      <if test="proCprice != null">
+        pro_cprice = #{proCprice,jdbcType=DECIMAL},
+      </if>
+      <if test="catId != null">
+        cat_id = #{catId,jdbcType=INTEGER},
+      </if>
+      <if test="proDetail != null">
+        pro_detail = #{proDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="proNum != null">
+        pro_num = #{proNum,jdbcType=INTEGER},
+      </if>
+      <if test="picId != null">
+        pic_id = #{picId,jdbcType=INTEGER},
+      </if>
+      <if test="proStatus != null">
+        pro_status = #{proStatus,jdbcType=INTEGER},
+      </if>
+      <if test="cTime != null">
+        c_time = #{cTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yd.model.TProduct">
+    update t_product
+    set pro_name = #{proName,jdbcType=VARCHAR},
+      pro_yprice = #{proYprice,jdbcType=DECIMAL},
+      pro_sprice = #{proSprice,jdbcType=DECIMAL},
+      pro_cprice = #{proCprice,jdbcType=DECIMAL},
+      cat_id = #{catId,jdbcType=INTEGER},
+      pro_detail = #{proDetail,jdbcType=VARCHAR},
+      pro_num = #{proNum,jdbcType=INTEGER},
+      pic_id = #{picId,jdbcType=INTEGER},
+      pro_status = #{proStatus,jdbcType=INTEGER},
+      c_time = #{cTime,jdbcType=TIMESTAMP}
+    where pro_id = #{proId,jdbcType=INTEGER}
+  </update>
+
+</mapper>

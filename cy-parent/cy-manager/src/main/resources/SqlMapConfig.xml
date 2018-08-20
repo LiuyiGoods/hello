@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>  
+          	<setting name="mapUnderscoreToCamelCase" value="true" />  
+         	<!-- 打开延迟加载的开关 -->
+    		<setting name="lazyLoadingEnabled" value="false"/>
+    		<!-- 设置积极加载或消极加载  -->
+    		<setting name="aggressiveLazyLoading" value="false"/>
+     </settings> 
+</configuration>
